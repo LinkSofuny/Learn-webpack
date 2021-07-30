@@ -1,0 +1,28 @@
+{
+  "name": "Learn-webpack",
+  "version": "1.0.0",
+  "description": "webpack学习笔记",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinkSofuny/Learn-webpack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinkSofuny/Learn-webpack/issues"
+  },
+  "homepage": "https://github.com/LinkSofuny/Learn-webpack#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
