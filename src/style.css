@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('iconfont.ttf?t=1627699560511') format('truetype');
+}
+.hello {
+    color: red;
+    font-family: 'iconfont';
+    background: url('./img.png');
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
