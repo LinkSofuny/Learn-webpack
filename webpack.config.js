@@ -23,6 +23,6 @@ module.exports = {
         clean: true,
         publicPath: '/'
     },
-    
+    // ...
 
 }
