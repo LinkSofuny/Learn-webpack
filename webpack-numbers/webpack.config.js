@@ -15,5 +15,14 @@ module.exports = (env) => {
                 type: 'umd'
             },
         },
+        module: [
+            rules: [
+                {
+                    test: /\.js$/,
+                    include: path.resolve(__dirname, 'src'),
+                    loader: 'babel-loader'
+                }
+            ]
+        ]
     }
 }
