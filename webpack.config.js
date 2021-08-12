@@ -1,6 +1,4 @@
 const path = require('path')
-const HtmlWebpackPulgin = require('html-webpack-plugin')
-
 
 module.exports = {
     mode: 'development',
@@ -11,29 +9,25 @@ module.exports = {
     devServer: {
         contentBase: './dist',
     },
-    plugins: [
-        new HtmlWebpackPulgin({
-            title: 'Caching'
-        })
-    ],
-    output: {
-        filename: '[name].[contenthash].js',
-        path: path.resolve(__dirname, 'dist'),
-        clean: true,
-        publicPath: '/'
-    },
-    optimization: {
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-        splitChunks: {
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all'
-                }
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.less$/i,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    // less文件传换css文件
+                    'less-loader'
+                ]
             }
-        }
-    }
-
+        ]
+    },
+    output: {
+        filename: 'buildt.js',
+        path: path.resolve(__dirname, 'dist'),
+    },
 }
