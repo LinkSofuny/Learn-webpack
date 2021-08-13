@@ -5,7 +5,6 @@ module.exports = {
     entry: {
         main: './src/index.js',
     },
-    devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
     },
@@ -23,6 +22,14 @@ module.exports = {
                     // less文件传换css文件
                     'less-loader'
                 ]
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource'
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                loader: 'html-loader'
             }
         ]
     },
@@ -34,5 +41,6 @@ module.exports = {
     output: {
         filename: 'buildt.js',
         path: path.resolve(__dirname, 'dist'),
+        clean: true
     },
 }
