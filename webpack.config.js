@@ -1,12 +1,16 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const miniCssExtractPlugin = require('mini-css-extract-plugin')
+
 
 module.exports = {
-    mode: 'development',
-    entry: './src/index.js',
+    entry: './src/js/index.js',
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
+        }),
+        new miniCssExtractPlugin({
+            filename: 'css/built.css'
         })
     ],
     devServer: {
@@ -16,16 +20,21 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
+                exclude: /node_modules/,
                 use: [
-                    'style-loader',
-                    'css-loader'
+                    // 替代style-loader 提取js中的css作为单独文件
+                    miniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader'
                 ]
-            },
+            }, 
             {
                 test: /\.less$/i,
+                exclude: /node_modules/,
                 use: [
-                    'style-loader',
+                    miniCssExtractPlugin.loader,
                     'css-loader',
+                    'postcss-loader',
                     'less-loader'
                 ]
             },
@@ -41,6 +50,8 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
-    }
+        path: path.resolve(__dirname, 'dist'),
+        clean: true
+    },
+    mode: 'development'
 }
