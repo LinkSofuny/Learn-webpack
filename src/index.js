@@ -1,8 +1,13 @@
-import './index.css'
-import html from "./index.html";
-import src from './demo.png'
-function add(x, y) {
-    return x + y
-}
+import './index.css';
 
-console.log(add(1,3))
+const add = (x, y) => x + y;
+
+const i = new Promise((resovle) => {
+  setTimeout(() => {
+    console.log('1111');
+    resovle();
+  }, 1000);
+});
+
+// eslint-disable-next-line
+console.log(add(1, 3), i);

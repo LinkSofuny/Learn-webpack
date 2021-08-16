@@ -1,23 +1,58 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
+const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 
 module.exports = {
-    entry: './src/js/index.js',
+    entry: './src/index.js',
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
         new miniCssExtractPlugin({
             filename: 'css/built.css'
-        })
+        }),
+        // 压缩css
+        new optimizeCssAssetsWebpackPlugin()
     ],
     devServer: {
         contentBase: './dist'
     },
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options: {
+                    presets: [
+                        ["@babel/preset-env", {
+                            useBuiltIns: "usage",
+                            corejs: {
+                                version: 2
+                            },
+                            targets: {
+                                ie: '9',
+                                chrome: '60'
+                            }
+                        }]
+                    ]
+                }
+            },
+            {
+                /**
+                 * eslint-loader
+                 * airbnb -> eslint-config-airbnb-base eslint eslint-plugin-import
+                */
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+                options: {
+                    // 自动修复
+                    fix: true
+                }
+            },
             {
                 test: /\.css$/i,
                 exclude: /node_modules/,
