@@ -57,5 +57,7 @@
   "eslintConfig": {
     "extends": "airbnb-base"
   },
-  "dependencies": {}
+  "dependencies": {
+    "core-js": "^3.16.1"
+  }
 }
