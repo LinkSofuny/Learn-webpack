@@ -25,11 +25,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                use: 'babel-loader',
-                exclude: /node_modules/,
-            },
-            {
                 /**
                  * eslint-loader
                  * airbnb -> eslint-config-airbnb-base eslint eslint-plugin-import
@@ -37,6 +32,14 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'eslint-loader',
+                options: {
+                    fix: true
+                }
+            },
+            {
+                test: /\.js$/,
+                use: 'babel-loader',
+                exclude: /node_modules/,
             },
             {
                 test: /\.css$/i,
@@ -69,17 +72,10 @@ module.exports = {
         ]
     },
     devServer: {
-        port: '3001',
-        hot: true,
-        stats: 'errors-only',
+        contentBase: path.resolve(__dirname, 'dist'),
+        stats: 'errors-only', // 终端仅打印 error
         compress: true,
-        proxy: {
-            '/api': {
-                target: 'http://0.0.0.0:80',
-                pathRewrite: {
-                    '/api': ''
-                }
-            }
-        }
+        port: 9000,
+        hot: true,
     },
 }
