@@ -5,7 +5,13 @@ const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.js',
+    output: {
+        filename: 'bundle.[contenthash:8].js',
+        path: path.resolve(__dirname, 'dist'),
+        clean: true
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
@@ -16,29 +22,12 @@ module.exports = {
         // 压缩css
         new optimizeCssAssetsWebpackPlugin()
     ],
-    devServer: {
-        contentBase: './dist'
-    },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                use: 'babel-loader',
                 exclude: /node_modules/,
-                options: {
-                    presets: [
-                        ["@babel/preset-env", {
-                            useBuiltIns: "usage",
-                            corejs: {
-                                version: 2
-                            },
-                            targets: {
-                                ie: '9',
-                                chrome: '60'
-                            }
-                        }]
-                    ]
-                }
             },
             {
                 /**
@@ -48,10 +37,6 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'eslint-loader',
-                options: {
-                    // 自动修复
-                    fix: true
-                }
             },
             {
                 test: /\.css$/i,
@@ -83,10 +68,18 @@ module.exports = {
             }
         ]
     },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        clean: true
+    devServer: {
+        port: '3001',
+        hot: true,
+        stats: 'errors-only',
+        compress: true,
+        proxy: {
+            '/api': {
+                target: 'http://0.0.0.0:80',
+                pathRewrite: {
+                    '/api': ''
+                }
+            }
+        }
     },
-    mode: 'production'
 }
