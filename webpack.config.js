@@ -2,16 +2,17 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-
+const DashboardPlugin = require("webpack-dashboard/plugin");
 
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
     output: {
-        filename: 'bundle.[contenthash:8].js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true
     },
+    target: 'web',
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
@@ -20,21 +21,14 @@ module.exports = {
             filename: 'css/built.css'
         }),
         // 压缩css
-        new optimizeCssAssetsWebpackPlugin()
+        new optimizeCssAssetsWebpackPlugin(),
     ],
     module: {
         rules: [
             {
-                /**
-                 * eslint-loader
-                 * airbnb -> eslint-config-airbnb-base eslint eslint-plugin-import
-                */
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'eslint-loader',
-                options: {
-                    fix: true
-                }
             },
             {
                 test: /\.js$/,
@@ -72,10 +66,10 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
+        port: '3001', // 默认是 8080
         stats: 'errors-only', // 终端仅打印 error
-        compress: true,
-        port: 9000,
-        hot: true,
+        compress: true, // 是否启用 gzip 压缩
+        contentBase: './dist',
+        hot: true // 开启HMR功能
     },
 }

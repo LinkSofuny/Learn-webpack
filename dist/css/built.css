@@ -1,1 +1,3 @@
-.demo,.demo2,.demo3,.demo4,.demo5,.demo6{color:red}
+/*!***********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/index.css ***!
+  \***********************************************************************************************************/.demo{color:blue}.demo2,.demo3,.demo4,.demo5,.demo6{color:red}
