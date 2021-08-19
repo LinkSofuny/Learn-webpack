@@ -27,13 +27,13 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
+                use: 'babel-loader',
+                exclude: [/node_modules/],
             },
             {
                 test: /\.js$/,
-                use: 'babel-loader',
                 exclude: /node_modules/,
+                loader: 'eslint-loader',
             },
             {
                 test: /\.css$/i,
