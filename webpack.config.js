@@ -6,9 +6,9 @@ const DashboardPlugin = require("webpack-dashboard/plugin");
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: ['./src/index.js', '/src/index.html'],
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.[hash:10].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true
     },
@@ -18,7 +18,7 @@ module.exports = {
             template: './src/index.html'
         }),
         new miniCssExtractPlugin({
-            filename: 'css/built.css'
+            filename: 'css/built.[hash:10].css'
         }),
         // 压缩css
         new optimizeCssAssetsWebpackPlugin(),
@@ -27,8 +27,11 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                use: 'babel-loader',
+                loader: 'babel-loader',
                 exclude: [/node_modules/],
+                options: {
+                    cacheDirectory: true
+                }
             },
             {
                 test: /\.js$/,
