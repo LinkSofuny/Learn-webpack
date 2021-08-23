@@ -4,11 +4,13 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const DashboardPlugin = require("webpack-dashboard/plugin");
 
+process.env.NODE_ENV = 'production'
+
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: ['./src/index.js', '/src/index.html'],
     output: {
-        filename: 'bundle.[hash:10].js',
+        filename: '[name].[hash:10].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true
     },
@@ -33,11 +35,11 @@ module.exports = {
                     cacheDirectory: true
                 }
             },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-            },
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     loader: 'eslint-loader',
+            // },
             {
                 test: /\.css$/i,
                 exclude: /node_modules/,
@@ -74,5 +76,10 @@ module.exports = {
         compress: true, // 是否启用 gzip 压缩
         contentBase: './dist',
         hot: true // 开启HMR功能
+    },
+    optimization: {
+        splitChunks: {
+          chunks: 'all',
+        },
     },
 }
