@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const DashboardPlugin = require("webpack-dashboard/plugin");
+const WorkWebpackPlugin = require('workbox-webpack-plugin')
 
 process.env.NODE_ENV = 'production'
 
@@ -24,16 +25,31 @@ module.exports = {
         }),
         // 压缩css
         new optimizeCssAssetsWebpackPlugin(),
+        // PWA
+        /*
+            1. 帮助 serviceWorker 快速启动
+            2. 删除旧的 serviceWorker
+        */
+        new WorkWebpackPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true
+        })
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                use: [
+                    'thread-loader',
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true
+                        }
+                    }
+                ],
                 exclude: [/node_modules/],
-                options: {
-                    cacheDirectory: true
-                }
+
             },
             // {
             //     test: /\.js$/,
@@ -82,4 +98,8 @@ module.exports = {
           chunks: 'all',
         },
     },
+    externals: {
+        // 忽略库名 -- npm 包名
+        jquery: "jQuery"
+    }
 }

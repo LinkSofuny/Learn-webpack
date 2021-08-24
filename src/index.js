@@ -19,5 +19,16 @@ const Test = function Test() {
 const a = new Test();
 // eslint-disable-next-line
 console.log(a, 1111222211);
-// eslint-disable-next-line
-console.log(mull(1, 2));
+
+
+if('serviceWork' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => {
+        console.log('sw注册成功')
+      })
+      .catch(() => {
+        console.log('sw注册失败');
+      })
+  })
+}
