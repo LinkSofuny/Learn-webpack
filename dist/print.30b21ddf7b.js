@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkLearn_webpack=self.webpackChunkLearn_webpack||[]).push([[740],{6657:(e,n,o)=>{o.r(n),o.d(n,{default:()=>a});var c=o(3609),l=o.n(c);function a(){console.log(5),console.log(l())}console.log("懒加载 print")}}]);
