@@ -5,6 +5,7 @@ const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const WorkWebpackPlugin = require('workbox-webpack-plugin')
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack');
 
 process.env.NODE_ENV = 'production'
@@ -94,6 +95,18 @@ module.exports = {
         splitChunks: {
           chunks: 'all',
         },
+        runtimeChunk: 'single',
+        minimizer: [
+            // 配置生产环境压缩 css 和 js 的方案
+            new TerserPlugin({
+                // 开启缓存
+                cache: true
+                // 开启多进程打包
+                parallel: true,
+                // 启动source-map
+                sourcerMap: true
+            })
+        ]
     },
     // externals: {
     //     jquery: 'jquery'
