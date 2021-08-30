@@ -6,7 +6,10 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'loader1'
+                loader: 'loader1',
+                options: {
+                    limit: '1'
+                }
             }
         ]
     },
