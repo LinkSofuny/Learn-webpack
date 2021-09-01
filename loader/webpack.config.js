@@ -1,14 +1,16 @@
 const path = require('path')
 
 module.exports = {
-    mode:'development',
+    mode:'production',
     module: {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'loader1',
+                loader: 'babelLoader',
                 options: {
-                    limit: '1'
+                    presets: [
+                        '@babel/preset-env'
+                    ]
                 }
             }
         ]

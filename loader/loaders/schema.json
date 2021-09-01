@@ -1,0 +1,10 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "这是一个字符串"
+        }
+    },
+    "addtionalProperties": true
+}
