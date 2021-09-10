@@ -1,4 +1,5 @@
-
+const fs = require('fs')
+const path = require('path')
 const { getAst, getDep, getCode } = require('./parser')
 
 class Compiler {
@@ -33,9 +34,8 @@ class Compiler {
                 }
             }
         }, {})
-        console.log(depsGraph);
+        this.generate(depsGraph)
     }
-
     build(filePath) {
         // 1. 文件解析成 ast
         const ast = getAst(filePath)
@@ -49,6 +49,33 @@ class Compiler {
             code
         }
     }
+    // 生成输出资源
+    generate(depsGraph) {
+        const bundle = `
+            (function (depsGraph) {
+
+                function require(module) {
+
+                    function localRequire(relavtivePath) {
+                        return require(depsGraph[module].deps[relavtivePath])
+                    }
+
+                    var exports = {};
+                    (function (require, exports, code) {
+                        eval(code)
+                    })(localRequire, exports, depsGraph[module].code)
+                    
+                    return exports
+                }
+                require('${this.options.entry}')
+
+            })(${JSON.stringify(depsGraph)})
+        `
+        // 生成输出文件的绝对路径
+        const filePath = path.resolve(this.options.output.path, this.options.output.filename) 
+        fs.writeFileSync(filePath, bundle, 'utf-8')
+    }
+
 }
 
 module.exports = Compiler
